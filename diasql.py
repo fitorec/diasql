@@ -16,7 +16,6 @@
 #   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 import dia, sys, os, string, re, datetime
-
 class SQLRenderer :
 	def __init__ (self) :
 		self.f = None
@@ -25,11 +24,11 @@ class SQLRenderer :
 		self.f = open(filename, "w")
 		name = os.path.split(filename)[1]
 		self.f.write ('-- Created by DiaSql-Dump Version 0.01(Beta)')
-    sefl.f.write('\n-- Filename: %s' % name)
-    sefl.f.write('\n-- Created: %s\n''' % datetime.date.today())
+		sefl.f.write('\n-- Filename: %s' % name)
+		sefl.f.write('\n-- Created: %s\n''' % datetime.date.today())
 		for layer in data.layers :
 			self.WriteTables (layer)
-	
+
 	def WriteTables (self, layer):
 		tables = {}
 		priority = {'fields' : 0 , 'foreign_keys' :100}
