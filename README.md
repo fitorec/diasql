@@ -38,4 +38,4 @@ tmb lo puede descargar desde la web y descomprimir posteriormente
 			|-- diapo.py <- Plugin para exportar archivo de traducción _.po_.
 			`-- diasql.py <- Plugin para exportar en SQL
 
-Para mayores informes usted puede consultar las [Ligas de interés](/fitorec/diasql/blob/master/bookmarks.md)
+Para mayores informes usted puede consultar las [Ligas de interés](/fitorec/diasql/blob/master/doc/bookmarks.md)
