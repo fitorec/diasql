@@ -48,7 +48,12 @@ class SQLRenderer :
 				atributes = o.properties['attributes'].value
 				for i in range(0,len(atributes)):
 					a = atributes[i]
-					tables[table] +=  '%0.3d\t`%s` %s' % (priority['fields']+i, a[0], a[1])
+					tipo = ''
+					if re.match('.*enum\(.*',a[1],re.I) :
+						tipo = a[1]
+					else :
+						tipo = a[1].upper()
+					tables[table] +=  '%0.3d\t`%s` %s' % (priority['fields']+i, a[0], tipo)
 					if a[3] == 1 :
 						tables[table] += ' PRIMARY KEY'
 

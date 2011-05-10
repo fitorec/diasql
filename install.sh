@@ -44,7 +44,8 @@ do
 	#chmod 644 $plugin.py
 	chmod 644 ./src/plugins/$plugin.py
 	#gene new 
-	cp ./src/$plugin.py /usr/share/dia/python/$plugin.py
+	rm -f /usr/share/dia/python/$plugin.py /usr/share/dia/python/$plugin.py
+	cp ./src/plugins/$plugin.py /usr/share/dia/python/$plugin.py
 	python -m compileall /usr/share/dia/python/$plugin.py
 	#permisos adecuados
 	chmod 644 /usr/share/dia/python/$plugin.py*

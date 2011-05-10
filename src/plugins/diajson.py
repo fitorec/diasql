@@ -96,7 +96,12 @@ class JSONRenderer :
 				for i in range(0,len(atributes)):
 					#cada atributo(campo) se abre({) con nombre  y se cierra con 
 					a = atributes[i]
-					tables[table] +=  '%0.3d {"nombre" : "%s", "tipo": "%s", ' % (priority['fields']+i, a[0], a[1])
+					tipo = ''
+					if re.match('.*enum\(.*',a[1],re.I) :
+						tipo = a[1]
+					else :
+						tipo = a[1].upper()
+					tables[table] +=  '%0.3d {"nombre" : "%s", "tipo": "%s", ' % (priority['fields']+i, a[0], tipo)
 					if a[3] == 1 :
 						tables[table] += '"clave_primaria": true,'
 						tables[table] += '"clave_unica": true,'
@@ -112,7 +117,7 @@ class JSONRenderer :
 						else:
 							tables[table] += '"clave_unica": false,'
 					#add  AUTO_INCREMENT 
-					if (a[3] == 1 and re.match('.*int.*',a[1],re.I)) :
+					if (a[3] == 1 and re.match('.*INT.*',a[1],re.I)) :
 						tables[table] += '"auto_increment": true'
 					else:
 						tables[table] += '"auto_increment": false'
