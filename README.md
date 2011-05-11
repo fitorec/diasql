@@ -15,12 +15,14 @@ Dia SQL
 	
 ####opteniendo el proyecto
 Desde git
+
 	#descargar el paquete
 	git clone git@github.com:fitorec/diasql.git
 
 Tambien lo puede descargar desde la web y descomprimir posteriormente 
 
 ####Instalando plugins y archivos dia
+
 	#una vez
 	cd diasql
 	sudo ./install.sh
