@@ -39,17 +39,5 @@ Tambien lo puede descargar desde la web y descomprimir posteriormente
 			|-- diajson.py <- Plugin para exportar en en _json_
 			|-- diapo.py <- Plugin para exportar archivo de traducción _.po_.
 			`-- diasql.py <- Plugin para exportar en SQL
-			
-###Video Muestra del DIA
-<script type="text/javascript" src="http://s3.www.universalsubtitles.org/embed.js">
-  ({
-       video_url: "http://www.youtube.com/watch?v=tViDesD4Adw&feature=fvsr",
-       video_config: {
-           color1: '0xFF0000',
-           width: 640,
-           height: 480
-       }
-  })
-</script>
 
 Para mayores informes usted puede consultar las [Ligas de interés](/fitorec/diasql/blob/master/doc/bookmarks.md)
