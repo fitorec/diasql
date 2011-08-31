@@ -34,7 +34,7 @@ done;
 
 #dia Splash
 echo "Cambiando Splash  (este se ve mas bonito :¬D)"
-cp dia-splash.png /usr/share/dia/dia-splash.png
+cp src/img/dia-splash.png /usr/share/dia/dia-splash.png
 
 #dia plugins
 plugins=(diasql diapo diacalc diajson)

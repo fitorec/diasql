@@ -39,15 +39,14 @@ class JSONRenderer :
 		n_tabla = 1
 		miny=500000
 		minx=500000
-		#obtenemos los minimos en x y y respectivamente.
-		#if o.type.name == 'Database - Table':
+		#extract the minimum values
 		for o in layer.objects :
 			pos = o.properties["obj_pos"].value
 			if pos.y < miny :
 				miny = pos.y
 			if pos.x<minx :
 				minx = pos.x
-		#pra cada tabla en la base de datos
+		#for each object o into the diagram
 		for o in layer.objects :
 			if o.type.name == 'Database - Table' :
 				if o.properties.has_key ("name") :
@@ -60,24 +59,20 @@ class JSONRenderer :
 					continue
 				if not tables.has_key(table):
 					tables[table] = ''
-				#
-				#for p in o.properties.keys(): 
-				#	print p, '\t', o.properties[p]
-				#posicion en X y Y de la tabla
-				print ("*"*80)+"\ntabla "+table
+				#get position object
 				pos = o.properties["obj_pos"].value
-				#agregando orden de la tabla
+				#add orden(order) of the table
 				values[table] = '"orden" : '+str(n_tabla)+',\n'
 				n_tabla = n_tabla+1
-				#Extrayendo las medidas
+				#extract the dimensions
 				w = int(o.properties["elem_width"].value*30)
 				h = int(o.properties["elem_height"].value*30)
 				values[table] += '"width" : '+str(w)+',\n'
 				values[table] += '"height" : '+str(h)+',\n'
-				#Las posiciones
+				#set the position
 				values[table] += '"pos_x" : '+str(int(pos.x-minx)*16)+',\n'
 				values[table] += '"pos_y" : '+str(int(pos.y-miny)*16)+',\n'
-				#Los colores
+				#set color
 				color = o.properties["fill_colour"].value
 				fill_colour='"#%02X%02X%02X"' % (int(255 * color.red), int(color.green * 255), int(color.blue * 255))
 				values[table] += '"fill_colour" : '+fill_colour+',\n'
@@ -91,10 +86,9 @@ class JSONRenderer :
 				values[table] += '"line_colour" : '+line_colour+',\n'
 				
 				atributes = o.properties['attributes'].value
-				print "tamaño anchoXalto=("+str(w)+"X"+str(h)+')'
-				#vamos a formar los datos en formato json
+				#set the diagram in json format
 				for i in range(0,len(atributes)):
-					#cada atributo(campo) se abre({) con nombre  y se cierra con 
+					#
 					a = atributes[i]
 					tipo = ''
 					if re.match('.*enum\(.*',a[1],re.I) :
@@ -144,8 +138,9 @@ class JSONRenderer :
 		self.f.close()
 # reference
 	def rgb (color) :
-		#convierte un color en una cadena en formato rgb hexadecimal
-		#print color
+		#convert the color into a string in RGB
 		rgb = "#%02X%02X%02X" #% (int(255 * color.red), int(color.green * 255), int(color.blue * 255))
 		return rgb
+
 dia.register_export ("SICAJSON exportar datos en formato JSON(JavaScript Object Notation)", "js", JSONRenderer())
+
