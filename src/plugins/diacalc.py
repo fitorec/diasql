@@ -15,7 +15,7 @@
 #   along with this program; if not, write to the Free Software
 #   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-import dia, sys, os, string, re, datetime
+import dia, sys, os, string, re
 
 class CalcRender :
 	def __init__ (self) :

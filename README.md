@@ -32,7 +32,7 @@ Tambien lo puede descargar desde la web y descomprimir posteriormente
 	.
 	|-- dia-splash.png <- nuevo splash
 	|-- install.sh <- instalador
-	|-- README.md <- Archivo REAME
+	|-- README.md <- Archivo README
 	`-- src
 		`-- plugins
 			|-- diacalc.py <- Plugin para exportar en Hojas de calculo de *libreOffice*

@@ -25,8 +25,7 @@ class SQLRenderer :
 		self.f = open(filename, "w")
 		name = os.path.split(filename)[1]
 		self.f.write ('''-- Created by DiaSql-Dump Version 0.01(Beta)
--- Filename: %s
--- Created: %s\n''' % (name,datetime.date.today()))
+-- Filename: %s\n''' % (name))
 		for layer in data.layers :
 			self.WriteTables (layer)
 	
