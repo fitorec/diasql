@@ -26,7 +26,7 @@ class JSONRenderer :
 		self.f = open(filename, "w")
 		name = os.path.split(filename)[1]
 		self.f.write ('''/* Created by DiaJSON-Dump Version 0.01(Beta)
--- Filename: %s\n''' % (name))
+ * Filename: %s\n */\n''' % (name))
 		self.f.write ("var tablas = [\n")
 		for layer in data.layers :
 			self.WriteTables (layer)

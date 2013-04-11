@@ -66,6 +66,10 @@ class SQLRenderer :
 					#add  AUTO_INCREMENT 
 					if (a[3] == 1 and re.match('.*int.*',a[1],re.I)) :
 						tables[table] += ' AUTO_INCREMENT'
+					#Commens
+					if (len(a[2])>1) :
+						tables[table] +=  ' COMMENT "%s"' % (a[2])
+
 					tables[table] += '\n'
 			elif o.type.name == 'Database - Reference':
 				continue

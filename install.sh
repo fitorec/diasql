@@ -24,20 +24,20 @@ then
 fi
 
 #Instalando Dia y los paquetes necesarios para trabajar en sica
-apt-get update -y
-packages=(dia-gnome mysql mysqldump)
-for package in ${packages[@]}
-do
-	apt-get --force-yes -y build-dep $package
-	apt-get --force-yes -y install $package
-done;
+#apt-get update -y
+#packages=(dia-gnome mysql mysqldump)
+#for package in ${packages[@]}
+#do
+#	apt-get --force-yes -y build-dep $package
+#	apt-get --force-yes -y install $package
+#done;
 
 #dia Splash
 echo "Cambiando Splash  (este se ve mas bonito :¬D)"
 cp dia-splash.png /usr/share/dia/dia-splash.png
 
 #dia plugins
-plugins=(diasql diapo diacalc diajson)
+plugins=(diasql diapo diacalc diajson diamd)
 for plugin in ${plugins[@]}
 do
 	echo "Compilando & copiando plugin " $plugin
