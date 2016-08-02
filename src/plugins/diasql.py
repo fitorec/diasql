@@ -17,79 +17,135 @@
 
 import dia, sys, os, string, re, datetime
 
+class BD:
+# Constructor
+	def __init__ (self, name) :
+		self._name = name
+		self.tables = {}
+# Add a table
+	def addTable (self, tableProperties):
+		name = ""
+		if tableProperties.has_key ("name") :
+			name = tableProperties["name"].value
+		elif tableProperties.has_key ("text") :
+			name = tableProperties["text"].value.text
+		elif len(name) == 0 or string.find(name, " ") >= 0 :
+			return None
+		if not self.tables.has_key(name):
+			self.tables[name] = Table(name, tableProperties)
+# toString
+	def __str__(self):
+		out = '-- Created by DiaSql Version 0.02(Beta)\n'
+		out += '-- Filename: %s\n' % (self._name)
+		for key in self.tables.keys():
+			out += str(self.tables[key])
+		out += '-- End SQL-Dump\n'
+		return out
+
+class Table:
+# constructor
+	def __init__ (self, name, tableProperties) :
+		self._name = name
+		self.columns = {}
+		self.colsPositions = []
+		self._comment =  ""
+		if (len(tableProperties["comment"].value)>1) :
+			self._comment = tableProperties["comment"].value
+		columns = tableProperties['attributes'].value
+		for i in range(0, len(columns)):
+			col = Column(columns[i])
+			if not self.columns.has_key(col._name):
+				self.columns[col._name] = col
+				self.colsPositions.append(col._name)
+
+# toString
+	def __str__(self):
+		out = '\n-- %s --\nDROP TABLE IF EXISTS `%s`;\n' % (self._name, self._name)
+		out += 'CREATE TABLE `%s` (\n' % self._name
+		cols = []
+		for key in self.colsPositions:
+			cols.append(str(self.columns[key]))
+		out += ",\n".join(cols)
+		out += '\n) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1'
+		if (len(self._comment)>1) :
+			out += ' COMMENT "' + self._comment + '"'
+		out += ';\n'
+		return out
+
+class Column:
+# Append a column list of atributes:
+# 0 name
+# 1 type
+# 2 Comment
+# 3 0 None, 1 AUTO_INCREMENT
+# 4 0 NOT NULL, 1 DEFAULT NULL
+# 5 0 none, 1 UNIQUE KEY
+	def __init__ (self, atributes):
+		# 0 name
+		self._name = atributes[0]
+		# 1 type
+		if re.match('.*enum\(.*',atributes[1],re.I) :
+			self._type = atributes[1]
+		else :
+			self._type = atributes[1].upper()
+		# 1  AUTO_INCREMENT
+		self._auto_increment = False
+		if (atributes[3] == 1 and re.match('.*int.*', self._type, re.I)) :
+			self._auto_increment = True
+		# 2  Comments
+		self._comment =  ""
+		if (len(atributes[2])>1) :
+			self._comment = atributes[2]
+		# 3  Primary key
+		self._primary_key =  False
+		if atributes[3] == 1 :
+			self._primary_key = True
+		# 4 NULL and NOT NULL
+		self._not_null = False
+		if atributes[4] == 0:
+			self._not_null = True
+		# 5 Unique Key
+		self._unique_key =  False
+		if atributes[5] == 1 and self._primary_key == False:
+			self._unique_key =  True
+		if self._primary_key or self._unique_key:
+			self._not_null = True
+
+# toString
+	def __str__(self):
+		out = '\t`%s` %s' % (self._name, self._type)
+		if self._not_null == True :
+			out += ' NOT'
+		out += ' NULL'
+		if self._auto_increment == True :
+			out += ' AUTO_INCREMENT'
+		if self._primary_key == True :
+			out += ' PRIMARY KEY'
+		if self._unique_key == True :
+			out += ' UNIQUE KEY'
+		if (len(self._comment)>1) :
+			out += ' COMMENT "%s"' % (self._comment)
+		return out
+
 class SQLRenderer :
 	def __init__ (self) :
 		self.f = None
-		
+		self.bd = None
+
 	def begin_render (self, data, filename) :
 		self.f = open(filename, "w")
 		name = os.path.split(filename)[1]
-		self.f.write ('''-- Created by DiaSql-Dump Version 0.01(Beta)
--- Filename: %s\n''' % (name))
+		self.bd = BD(name)
 		for layer in data.layers :
 			self.WriteTables (layer)
-	
+
 	def WriteTables (self, layer):
-		tables = {}
-		priority = {'fields' : 0 , 'foreign_keys' :100}
 		for o in layer.objects :
 			if o.type.name == 'Database - Table' :
-				if o.properties.has_key ("name") :
-					table = o.properties["name"].value
-				elif o.properties.has_key ("text") :
-					table = o.properties["text"].value.text
-				else :
-					continue
-				if len(table) == 0 or string.find (table, " ") >= 0 :
-					continue
-				if not tables.has_key(table):
-					tables[table] = ''
-				atributes = o.properties['attributes'].value
-				for i in range(0,len(atributes)):
-					a = atributes[i]
-					tipo = ''
-					if re.match('.*enum\(.*',a[1],re.I) :
-						tipo = a[1]
-					else :
-						tipo = a[1].upper()
-					tables[table] +=  '%0.3d\t`%s` %s' % (priority['fields']+i, a[0], tipo)
-					if a[3] == 1 :
-						tables[table] += ' PRIMARY KEY'
+				self.bd.addTable(o.properties)
+		self.f.write(str(self.bd))
 
-					if a[4] == 0 :
-						tables[table] += ' NOT NULL'
-					else:
-						tables[table] += ' DEFAULT NULL'
-
-					if a[5] == 1 :
-						tables[table] += ' UNIQUE'
-					#add  AUTO_INCREMENT 
-					if (a[3] == 1 and re.match('.*int.*',a[1],re.I)) :
-						tables[table] += ' AUTO_INCREMENT'
-					#Commens
-					if (len(a[2])>1) :
-						tables[table] +=  ' COMMENT "%s"' % (a[2])
-
-					tables[table] += '\n'
-			elif o.type.name == 'Database - Reference':
-				continue
-				'''src = o.properties['start_point_desc'].value.split('.')
-				desc = o.properties['end_point_desc'].value.split('.')
-				if len(src) != 2 and len(desc) != 2:
-					continue
-				if not tables.has_key(desc[0]):
-					tables[desc[0]] = ''
-				tables[desc[0]] += '%0.3d\tFOREIGN KEY (%s) REFERENCES %s(%s)\n' % (priority['foreign_keys'],desc[1],src[0],src[1])'''
-		for k in tables.keys():
-			self.f.write('\n-- %s --\nDROP TABLE IF EXISTS `%s`;\n' % (k,k) )
-			self.f.write ('CREATE TABLE IF NOT EXISTS `%s` (\n' % k)
-			sentences = sorted( tables[k].split('\n') )
-			sentences = [str(s[3:]) for s in sentences if len(s)>4]
-			sentences = ",\n".join( sentences)
-			self.f.write ('%s\n' % sentences)
-			self.f.write (') ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;\n')
 	def end_render (self) :
-		self.f.write ('-- End SQL-Dump\n')
 		self.f.close()
 # reference
 dia.register_export ("SICASQL generado de esquema en SQL", "sql", SQLRenderer())

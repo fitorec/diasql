@@ -23,7 +23,7 @@ then
   exit $E_BADARGS
 fi
 
-#Instalando Dia y los paquetes necesarios para trabajar en sica
+#Instalando Dia y los paquetes necesarios para trabajar en SICA
 #apt-get update -y
 #packages=(dia-gnome mysql mysqldump)
 #for package in ${packages[@]}
@@ -37,7 +37,7 @@ echo "Cambiando Splash  (este se ve mas bonito :¬D)"
 cp dia-splash.png /usr/share/dia/dia-splash.png
 
 #dia plugins
-plugins=(diasql diapo diacalc diajson diamd)
+plugins=(diasql diapo diacalc diajson)
 for plugin in ${plugins[@]}
 do
 	echo "Compilando & copiando plugin " $plugin

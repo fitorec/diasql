@@ -1,4 +1,4 @@
-Dia SQL
+Dia SQL - 0.02(Beta)
 ===========================================================================
 
 > Plugins para el modelador de diagramas de base de datos
