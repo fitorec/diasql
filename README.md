@@ -3,6 +3,16 @@ Dia SQL - 0.02(Beta)
 
 > Plugins para el modelador de diagramas de base de datos
 
+## Install on Windows.
+
+### Software:
+- Install Python 2.3.5 is available from http://python.org/ftp/python/2.3.5/Python-2.3.5.exe>http://dia-installer.de>
+- Install DIA <http://dia-installer.de>
+- Install PyCairo 1.0.2. <http://ftp.gnome.org/pub/GNOME/binaries/win32/pycairo/1.0/pycairo-1.0.2-1.win32-py2.3.exe>
+- Install PyGtk 2.8.6. It is available from <http://ftp.gnome.org/pub/GNOME/binaries/win32/pygtk/2.8/pygtk-2.8.6-1.win32-py2.3.exe>
+
+Put de files in the directory: `C:\Users\[USER]\.dia\python`.
+Open DIA, create a Database Diagram and export how SQL file.
 
 ##Dia SQL te permite generar.
 
