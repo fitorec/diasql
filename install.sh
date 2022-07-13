@@ -17,11 +17,12 @@
 #          `'         `'
 
 
-if [ `id -g` -ne 0 ]
-then
-  echo "Usage:  ./$0 root group"
-  exit $E_BADARGS
-fi
+# if [ `id -g` -ne 0 ]
+# then
+#  echo "Usage:  ./$0 root group"
+#  exit $E_BADARGS
+# fi
+
 
 #Instalando Dia y los paquetes necesarios para trabajar en SICA
 #apt-get update -y
@@ -43,12 +44,13 @@ do
 	echo "Compilando & copiando plugin " $plugin
 	#chmod 644 $plugin.py
 	chmod 644 ./src/plugins/$plugin.py
-	#gene new 
-	rm -f /usr/share/dia/python/$plugin.py /usr/share/dia/python/$plugin.py
-	cp ./src/plugins/$plugin.py /usr/share/dia/python/$plugin.py
-	python -m compileall /usr/share/dia/python/$plugin.py
+	#gene new
+  mkdir -p ~/.dia/python/
+	rm -f ~/.dia/python/$plugin.py ~/.dia/python/$plugin.py
+	cp ./src/plugins/$plugin.py ~/.dia/python/$plugin.py
+	python3 -m compileall ~/.dia/python/$plugin.py
 	#permisos adecuados
-	chmod 644 /usr/share/dia/python/$plugin.py*
+	chmod 644 ~/.dia/python/$plugin.py*
 done;
 
 zenity --info --text="La instalacion ha concluido de forma exitosa"

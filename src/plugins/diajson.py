@@ -96,7 +96,7 @@ class JSONRenderer:
                 values[table] += '"text_colour" : ' + text_colour + ',\n'
                 #
                 color = o.properties["line_colour"].value
-                line_colour = = rgbColor(color)
+                line_colour = rgbColor(color)
                 values[table] += '"line_colour" : ' + line_colour + ',\n'
 
                 atributes = o.properties['attributes'].value
@@ -109,8 +109,9 @@ class JSONRenderer:
                         tipo = a[1]
                     else:
                         tipo = a[1].upper()
-                    tables[table] += '%0.3d {"nombre" : "%s", "tipo": "%s", ' %
-                    (priority['fields'] + i, a[0], tipo)
+                    tables[table] += '%0.3d {"nombre": "%s", "tipo": "%s", ' % (
+                      priority['fields'] + i, a[0], tipo
+                    )
                     if a[3] == 1:
                         tables[table] += '"clave_primaria": true,'
                         tables[table] += '"clave_unica": true,'

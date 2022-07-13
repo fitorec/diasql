@@ -21,33 +21,43 @@ Open DIA, create a Database Diagram and export how SQL file.
  - Objeto exportar el digrama en _json_ (formato ideal para importar en la web).
  - Archivo de traducción _.po_.
 
-##instalación.
-	
-####opteniendo el proyecto
-Desde git
+### instalación.
 
-	#descargar el paquete
-	git clone git@github.com:fitorec/diasql.git
+#### opteniendo el proyecto
 
-Tambien lo puede descargar desde la web y descomprimir posteriormente 
+desde git
 
-####Instalando plugins y archivos dia
+  #descargar el paquete
+  git clone git@github.com:fitorec/diasql.git
+  cd diasql
 
-	#una vez
-	cd diasql
-	sudo ./install.sh
+Desde la web:
+
+Tambien lo puede descargar desde la web y descomprimir manualmente:
+
+> <https://github.com/fitorec/diasql/archive/refs/heads/master.zip>
+
+
+#### Instalando plugins y archivos dia
+
+  # una vez
+  cd diasql
+  sudo ./install.sh
 
 ###Estructura actual de archivos
 
-	.
-	|-- dia-splash.png <- nuevo splash
-	|-- install.sh <- instalador
-	|-- README.md <- Archivo README
-	`-- src
-		`-- plugins
-			|-- diacalc.py <- Plugin para exportar en Hojas de calculo de *libreOffice*
-			|-- diajson.py <- Plugin para exportar en en _json_
-			|-- diapo.py <- Plugin para exportar archivo de traducción _.po_.
-			`-- diasql.py <- Plugin para exportar en SQL
+  .
+  |-- dia-splash.png <- nuevo splash
+  |-- install.sh <- instalador
+  |-- README.md <- Archivo README
+  `-- src
+    `-- plugins
+      |-- diacalc.py <- Plugin para exportar en Hojas de calculo de *libreOffice*
+      |-- diajson.py <- Plugin para exportar en en _json_
+      |-- diapo.py <- Plugin para exportar archivo de traducción _.po_.
+      `-- diasql.py <- Plugin para exportar en SQL
 
-Para mayores informes usted puede consultar las [Ligas de interés](/fitorec/diasql/blob/master/doc/bookmarks.md)
+### Liga de interes y mayores informes:
+
+ - <https://wiki.gnome.org/Apps/Dia/Python>
+ 
